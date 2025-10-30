@@ -1,0 +1,46 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+env/
+venv/
+.DS_Store
+
+# ---- IDE ----
+.vscode/
+.idea/
+*.swp
+
+# ---- Mac ----
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ---- Logs ----
+*.log
+*.out
+
+# ---- Data ----
+*.csv
+*.npy
+*.npz
+*.json
+*.pkl
+*.h5
+*.pth
+
+# ---- Screenshots ----
+screenshots/
+recordings/
+dataset/
+
+# ---- Misc ----
+*.zip
+*.tar
+*.gz
+*.mp4
