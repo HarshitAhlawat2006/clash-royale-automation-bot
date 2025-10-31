@@ -58,6 +58,7 @@ def detect(needle, haystack, threshold=0.98):
 
 ### Constants 
 i = 0
+prev_card = None
 hand = ["?" for i in range(8)]
 card_height, card_width, scale = 40, 20, 0.5
 left = {'top': 58, 'left': 455, 'width': 370, 'height': 654}
@@ -68,7 +69,7 @@ needle = cv2.resize(needle, (0, 0), fx=scale, fy=scale)
 sct = mss()
 
 
-while pyautogui.position()[1] >= 50:
+while pyautogui.position()[1] >= 100: ### Stopping Condition
     ### Grabs Game Screen
     frame = np.array(sct.grab(left))
     frame = cv2.resize(frame, (0, 0), fx=scale, fy=scale)
@@ -90,14 +91,19 @@ while pyautogui.position()[1] >= 50:
 
         ### Updating Opponents Hand Based on Model's Prediction
         s = card_name
+        ### Avoids Multiple Input From Same Card
+        if s == prev_card:
+            continue
         if s not in hand:
             hand[i%4] = s
             i += 1
         x = hand.index(s)
         hand[7], hand[6], hand[5], hand[4], hand[x] = hand[x], hand[7], hand[6], hand[5], hand[4]
-        # print(f"Spawned card: {card_name} (conf={cnf:.2f})") (Optional For Debuging)
-        print(f"Current hand: {hand[:4]}")
-
+        print(f"Spawned card: {card_name} (conf={cnf:.2f})") 
+        print(f"Current Opponent hand: {hand[:4]}")
+        prev_card = s
+    ### Screen Size Adjustment 
+    frame = cv2.resize(frame, (300, 300))
     cv2.imshow("screen", frame)
     if (cv2.waitKey(1) & 0xFF) == ord('q'):
         cv2.destroyAllWindows()
